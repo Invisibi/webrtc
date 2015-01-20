@@ -190,6 +190,8 @@ class WebRtcVoiceEngine
   // Create a VoiceEngine Channel.
   int CreateMediaVoiceChannel();
   int CreateSoundclipVoiceChannel();
+  
+  bool GetVoiceActivityIndicator();
 
  private:
   typedef std::vector<WebRtcSoundclipMedia *> SoundclipList;

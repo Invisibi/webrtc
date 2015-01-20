@@ -378,6 +378,10 @@ WebRtcVoiceEngine::WebRtcVoiceEngine(VoEWrapper* voe_wrapper,
       rx_processor_ssrc_(0) {
   Construct();
 }
+    
+bool WebRtcVoiceEngine::GetVoiceActivityIndicator() {
+  return voe_wrapper_->processing()->VoiceActivityIndicator(0);
+}
 
 void WebRtcVoiceEngine::Construct() {
   SetTraceFilter(log_filter_);
