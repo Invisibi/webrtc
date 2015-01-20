@@ -21,6 +21,7 @@
 *.vpwhistu
 *.vtg
 *.xcodeproj
+*.xcworkspace
 *_proto.xml
 *_proto_cpp.xml
 *~
@@ -49,6 +50,7 @@
 /links.db
 /net
 /out
+/out_mac
 /resources
 /talk/examples/android/bin
 /talk/examples/android/gen
@@ -152,5 +154,6 @@
 /webrtc/video_engine/test/android/obj
 /x86-generic_out/
 /xcodebuild
+/DerivedData
 
 !*.sha1
