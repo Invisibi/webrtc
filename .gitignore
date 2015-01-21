@@ -153,3 +153,6 @@
 /xcodebuild
 
 !*.sha1
+
+/chromium-src
+/out_android_armeabi_v7a
