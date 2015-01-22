@@ -36,6 +36,7 @@ static NSString const *kRTCSessionDescriptionSdpKey = @"sdp";
     (NSDictionary *)dictionary {
   NSString *type = dictionary[kRTCSessionDescriptionTypeKey];
   NSString *sdp = dictionary[kRTCSessionDescriptionSdpKey];
+  sdp = [sdp stringByReplacingOccurrencesOfString:@"a=rtpmap:111 opus/48000/2\r\na=fmtp:111 minptime=10\r\n" withString:@""];
   return [[RTCSessionDescription alloc] initWithType:type sdp:sdp];
 }
 

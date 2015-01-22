@@ -1,0 +1,11 @@
+INPUT = talk/app talk/examples talk/media talk/session webrtc
+FILE_PATTERNS = *.cc *.h *.m *.mm
+RECURSIVE = YES
+EXCLUDE_PATTERNS = *_unittest.cc buzz* sigslot*
+EXTRACT_ALL = YES
+SOURCE_BROWSER = YES
+INLINE_SOURCES = YES
+REFERENCED_BY_RELATION = YES
+COLLABORATION_GRAPH = YES
+HAVE_DOT = YES
+BUILTIN_STL_SUPPORT = YES

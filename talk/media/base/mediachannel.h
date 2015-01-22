@@ -50,6 +50,10 @@ class RateLimiter;
 class Timing;
 }
 
+namespace webrtc {
+  class VoEMediaProcess;
+}
+
 namespace cricket {
 
 class AudioRenderer;
@@ -1028,6 +1032,7 @@ class VoiceMediaChannel : public MediaChannel {
   virtual bool SetRemoteRenderer(uint32 ssrc, AudioRenderer* renderer) = 0;
   // Sets the renderer object to be used for the specified local audio stream.
   virtual bool SetLocalRenderer(uint32 ssrc, AudioRenderer* renderer) = 0;
+  virtual bool addExternalAudioProcessing(uint32 ssrc, webrtc::VoEMediaProcess& process) = 0;
   // Gets current energy levels for all incoming streams.
   virtual bool GetActiveStreams(AudioInfo::StreamList* actives) = 0;
   // Get the current energy level of the stream sent to the speaker.
@@ -1065,7 +1070,7 @@ class VoiceMediaChannel : public MediaChannel {
   // Sets the media options to use.
   virtual bool SetOptions(const AudioOptions& options) = 0;
   virtual bool GetOptions(AudioOptions* options) const = 0;
-
+  
   // Signal errors from MediaChannel.  Arguments are:
   //     ssrc(uint32), and error(VoiceMediaChannel::Error).
   sigslot::signal2<uint32, VoiceMediaChannel::Error> SignalMediaError;

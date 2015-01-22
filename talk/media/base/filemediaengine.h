@@ -185,6 +185,7 @@ class FileVoiceChannel : public VoiceMediaChannel {
       rtc::Thread* rtp_sender_thread);
   virtual ~FileVoiceChannel();
 
+  virtual bool addExternalAudioProcessing(uint32 ssrc, webrtc::VoEMediaProcess& process) { return false; }
   // Implement pure virtual methods of VoiceMediaChannel.
   virtual bool SetRecvCodecs(const std::vector<AudioCodec>& codecs) {
     return true;

@@ -37,6 +37,7 @@
 #include "talk/app/webrtc/streamcollection.h"
 #include "talk/app/webrtc/webrtcsession.h"
 #include "webrtc/base/scoped_ptr.h"
+#include "webrtc/voice_engine/include/voe_external_media.h"
 
 namespace webrtc {
 class MediaStreamHandlerContainer;
@@ -53,7 +54,8 @@ class PeerConnection : public PeerConnectionInterface,
                        public MediaStreamSignalingObserver,
                        public IceObserver,
                        public rtc::MessageHandler,
-                       public sigslot::has_slots<> {
+                       public sigslot::has_slots<>,
+                       public VoEMediaProcess {
  public:
   explicit PeerConnection(PeerConnectionFactory* factory);
 
@@ -153,6 +155,9 @@ class PeerConnection : public PeerConnectionInterface,
   virtual void OnIceGatheringChange(IceGatheringState new_state);
   virtual void OnIceCandidate(const IceCandidateInterface* candidate);
   virtual void OnIceComplete();
+                         
+  // Implements VoEMediaProcessing
+  virtual void Process(int channel, ProcessingTypes type, int16_t audio10ms[], int length, int samplingFreq, bool isStereo);
 
   // Signals from WebRtcSession.
   void OnSessionStateChange(cricket::BaseSession* session,

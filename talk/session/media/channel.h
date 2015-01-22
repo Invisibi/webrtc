@@ -49,6 +49,10 @@
 #include "webrtc/base/sigslot.h"
 #include "webrtc/base/window.h"
 
+namespace webrtc {
+  class VoEMediaProcess;
+}
+
 namespace cricket {
 
 struct CryptoParams;
@@ -405,6 +409,7 @@ class VoiceChannel : public BaseChannel {
   bool Init();
   bool SetRemoteRenderer(uint32 ssrc, AudioRenderer* renderer);
   bool SetLocalRenderer(uint32 ssrc, AudioRenderer* renderer);
+  bool addExternalAudioProcessing(uint32 ssrc, webrtc::VoEMediaProcess& process);
 
   // downcasts a MediaChannel
   virtual VoiceMediaChannel* media_channel() const {

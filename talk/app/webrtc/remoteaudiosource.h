@@ -30,7 +30,7 @@
 
 #include <list>
 
-#include "talk/app/webrtc/mediastreaminterface.h"
+#include "talk/media/webrtc/webrtcvoiceengine.h"
 #include "talk/app/webrtc/notifier.h"
 
 namespace cricket {
@@ -47,13 +47,13 @@ using webrtc::AudioSourceInterface;
 class RemoteAudioSource : public Notifier<AudioSourceInterface> {
  public:
   // Creates an instance of RemoteAudioSource.
-  static rtc::scoped_refptr<RemoteAudioSource> Create(cricket::ChannelManager* channel_manager);
+  static rtc::scoped_refptr<RemoteAudioSource> Create();
   
   virtual void AddSink(cricket::AudioRenderer* output);
   virtual void RemoveSink(cricket::AudioRenderer* output);
 
  protected:
-  RemoteAudioSource(cricket::ChannelManager* channel_manager);
+  RemoteAudioSource();
   virtual ~RemoteAudioSource();
 
  private:
@@ -68,7 +68,6 @@ class RemoteAudioSource : public Notifier<AudioSourceInterface> {
   virtual void UnregisterAudioObserver(AudioObserver* observer) OVERRIDE;
 
   AudioObserverList audio_observers_;
-  cricket::ChannelManager* channel_manager_;
 };
 
 }  // namespace webrtc

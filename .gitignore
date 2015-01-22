@@ -155,5 +155,7 @@
 /x86-generic_out/
 /xcodebuild
 /DerivedData
-
+/html
+/latex
 !*.sha1
+

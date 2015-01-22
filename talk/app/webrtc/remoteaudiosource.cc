@@ -34,12 +34,11 @@
 
 namespace webrtc {
 
-rtc::scoped_refptr<RemoteAudioSource> RemoteAudioSource::Create(cricket::ChannelManager* channel_manager) {
-  return new rtc::RefCountedObject<RemoteAudioSource>(channel_manager);
+rtc::scoped_refptr<RemoteAudioSource> RemoteAudioSource::Create() {
+  return new rtc::RefCountedObject<RemoteAudioSource>();
 }
 
-RemoteAudioSource::RemoteAudioSource(cricket::ChannelManager *channel_manager) :
-  channel_manager_(channel_manager){
+RemoteAudioSource::RemoteAudioSource() {
 }
 
 RemoteAudioSource::~RemoteAudioSource() {

@@ -54,6 +54,8 @@
 #include "webrtc/base/logging.h"
 #include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/ssladapter.h"
+#include "webrtc/system_wrappers/interface/trace.h"
+#include "webrtc/test/testsupport/trace_to_stderr.h"
 
 @interface RTCPeerConnectionFactory ()
 
@@ -91,7 +93,10 @@
         _signalingThread.get(), _workerThread.get(), NULL, NULL, NULL);
     NSAssert(_nativeFactory, @"Failed to initialize PeerConnectionFactory!");
     // Uncomment to get sensitive logs emitted (to stderr or logcat).
-    // rtc::LogMessage::LogToDebug(rtc::LS_SENSITIVE);
+    rtc::LogMessage::LogToDebug(rtc::LS_SENSITIVE);
+      
+      webrtc::Trace::SetTraceFile("/tmp/webrtc_trace.log");
+      webrtc::Trace::set_level_filter(webrtc::kTraceInfo);
   }
   return self;
 }

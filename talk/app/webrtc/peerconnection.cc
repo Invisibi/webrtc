@@ -792,6 +792,7 @@ void PeerConnection::OnAddRemoteAudioTrack(MediaStreamInterface* stream,
                                            AudioTrackInterface* audio_track,
                                            uint32 ssrc) {
   stream_handler_container_->AddRemoteAudioTrack(stream, audio_track, ssrc);
+  session_->voice_channel()->addExternalAudioProcessing(ssrc, *this);
 }
 
 void PeerConnection::OnAddRemoteVideoTrack(MediaStreamInterface* stream,
@@ -881,4 +882,8 @@ void PeerConnection::ChangeSignalingState(
   observer_->OnStateChange(PeerConnectionObserver::kSignalingState);
 }
 
+void PeerConnection::Process(int channel, ProcessingTypes type, int16_t audio10ms[], int length, int samplingFreq, bool isStereo) {
+  
+}
+  
 }  // namespace webrtc

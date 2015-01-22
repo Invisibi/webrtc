@@ -44,6 +44,7 @@
 #import "RTCSessionDescription+JSON.h"
 #import "RTCVideoCapturer.h"
 #import "RTCVideoTrack.h"
+#import "RTCAudioTrack.h"
 
 static NSString *kARDDefaultSTUNServerUrl =
     @"stun:stun.l.google.com:19302";
@@ -261,6 +262,10 @@ static NSInteger kARDAppClientErrorInvalidRoom = -6;
     NSLog(@"Received %lu video tracks and %lu audio tracks",
         (unsigned long)stream.videoTracks.count,
         (unsigned long)stream.audioTracks.count);
+    if (stream.audioTracks.count) {
+      RTCAudioTrack *audioTrack = stream.audioTracks[0];
+      [audioTrack addSink:self];
+    }
     if (stream.videoTracks.count) {
       RTCVideoTrack *videoTrack = stream.videoTracks[0];
       [_delegate appClient:self didReceiveRemoteVideoTrack:videoTrack];
@@ -414,6 +419,7 @@ static NSInteger kARDAppClientErrorInvalidRoom = -6;
       RTCSessionDescription *description = sdpMessage.sessionDescription;
       [_peerConnection setRemoteDescriptionWithDelegate:self
                                      sessionDescription:description];
+      [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(tick:) userInfo:nil repeats:YES];
       break;
     }
     case kARDSignalingMessageTypeCandidate: {
@@ -429,6 +435,11 @@ static NSInteger kARDAppClientErrorInvalidRoom = -6;
       [self disconnect];
       break;
   }
+}
+
+- (void)tick:(NSTimer *)timer
+{
+    NSLog(@"Voice activity: %@", [_factory voiceActivity] ? @"Speaking" : @"Slient");
 }
 
 - (void)sendSignalingMessage:(ARDSignalingMessage *)message {
@@ -528,10 +539,13 @@ static NSInteger kARDAppClientErrorInvalidRoom = -6;
       [[RTCPair alloc] initWithKey:@"OfferToReceiveAudio" value:@"true"],
       [[RTCPair alloc] initWithKey:@"OfferToReceiveVideo" value:@"true"]
   ];
+  NSArray *optionalConstraints = @[
+      [[RTCPair alloc] initWithKey:@"VoiceActivityDetection" value:@"true"],
+                                   ];
   RTCMediaConstraints* constraints =
       [[RTCMediaConstraints alloc]
           initWithMandatoryConstraints:mandatoryConstraints
-                   optionalConstraints:nil];
+                   optionalConstraints:optionalConstraints];
   return constraints;
 }
 
@@ -611,6 +625,13 @@ static NSInteger kARDAppClientErrorInvalidRoom = -6;
       break;
   }
   return error;
+}
+
+#pragma mark - RTCAudioSink
+
+- (void)onData:(const void *)data bitsPerSample:(int)bitsPerSample sampleRate:(int)sampleRate numberOfChannels:(int)numberOfChannels numberOfFrames:(int)numberOfFrames
+{
+  NSLog(@"Received audio frames %d", numberOfFrames);
 }
 
 @end

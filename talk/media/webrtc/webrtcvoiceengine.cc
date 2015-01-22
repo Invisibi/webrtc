@@ -2882,6 +2882,17 @@ bool WebRtcVoiceMediaChannel::SetRemoteRenderer(uint32 ssrc,
 
   return true;
 }
+  
+  bool WebRtcVoiceMediaChannel::addExternalAudioProcessing(uint32 ssrc, webrtc::VoEMediaProcess& process) {
+  ChannelMap::iterator it = receive_channels_.find(ssrc);
+  if (it == receive_channels_.end()) {
+    // The channel likely has gone away, do nothing.
+    return true;
+  }
+    engine()->voe()->media()->RegisterExternalMediaProcessing(it->second->channel(), webrtc::kPlaybackAllChannelsMixed, process);
+
+  return true;
+}
 
 bool WebRtcVoiceMediaChannel::SetLocalRenderer(uint32 ssrc,
                                                AudioRenderer* renderer) {

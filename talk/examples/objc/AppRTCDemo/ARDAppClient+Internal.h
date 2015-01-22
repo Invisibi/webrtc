@@ -34,9 +34,11 @@
 #import "RTCPeerConnectionDelegate.h"
 #import "RTCPeerConnectionFactory.h"
 #import "RTCSessionDescriptionDelegate.h"
+#import "RTCStatsDelegate.h"
+#import "RTCAudioSink.h"
 
 @interface ARDAppClient () <ARDSignalingChannelDelegate,
-    RTCPeerConnectionDelegate, RTCSessionDescriptionDelegate>
+    RTCPeerConnectionDelegate, RTCSessionDescriptionDelegate, RTCAudioSink>
 
 @property(nonatomic, strong) id<ARDRoomServerClient> roomServerClient;
 @property(nonatomic, strong) id<ARDSignalingChannel> channel;

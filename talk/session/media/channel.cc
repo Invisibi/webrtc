@@ -1292,6 +1292,10 @@ bool VoiceChannel::SetLocalRenderer(uint32 ssrc, AudioRenderer* renderer) {
                              media_channel(), ssrc, renderer));
 }
 
+bool VoiceChannel::addExternalAudioProcessing(uint32 ssrc, webrtc::VoEMediaProcess& process) {
+  return InvokeOnWorker(Bind(&VoiceMediaChannel::addExternalAudioProcessing, media_channel(), ssrc, process));
+}
+
 bool VoiceChannel::SetRingbackTone(const void* buf, int len) {
   return InvokeOnWorker(Bind(&VoiceChannel::SetRingbackTone_w, this, buf, len));
 }

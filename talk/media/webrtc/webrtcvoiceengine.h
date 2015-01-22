@@ -56,6 +56,7 @@
 
 namespace webrtc {
 class VideoEngine;
+class VoEMediaProcess;
 }
 
 namespace cricket {
@@ -364,6 +365,7 @@ class WebRtcVoiceMediaChannel
   virtual bool RemoveRecvStream(uint32 ssrc);
   virtual bool SetRemoteRenderer(uint32 ssrc, AudioRenderer* renderer);
   virtual bool SetLocalRenderer(uint32 ssrc, AudioRenderer* renderer);
+  virtual bool addExternalAudioProcessing(uint32 ssrc, webrtc::VoEMediaProcess& process);
   virtual bool GetActiveStreams(AudioInfo::StreamList* actives);
   virtual int GetOutputLevel();
   virtual int GetTimeSinceLastTyping();
