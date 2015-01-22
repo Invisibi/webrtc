@@ -31,6 +31,7 @@
 #include "talk/app/webrtc/mediastreaminterface.h"
 #include "talk/app/webrtc/mediastreamtrack.h"
 #include "talk/app/webrtc/notifier.h"
+#include "talk/app/webrtc/audiotracksinks.h"
 #include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/scoped_ref_ptr.h"
 
@@ -46,8 +47,8 @@ class AudioTrack : public MediaStreamTrack<AudioTrackInterface> {
     return audio_source_.get();
   }
   // TODO(xians): Implement these methods.
-  virtual void AddSink(AudioTrackSinkInterface* sink) OVERRIDE {}
-  virtual void RemoveSink(AudioTrackSinkInterface* sink) OVERRIDE {}
+  virtual void AddSink(AudioTrackSinkInterface* sink);
+  virtual void RemoveSink(AudioTrackSinkInterface* sink);
   virtual bool GetSignalLevel(int* level) OVERRIDE { return false; }
   virtual rtc::scoped_refptr<AudioProcessorInterface> GetAudioProcessor()
       OVERRIDE { return NULL; }
@@ -62,6 +63,7 @@ class AudioTrack : public MediaStreamTrack<AudioTrackInterface> {
   AudioTrack(const std::string& label, AudioSourceInterface* audio_source);
 
  private:
+  AudioTrackSinks sinks_;
   rtc::scoped_refptr<AudioSourceInterface> audio_source_;
 };
 

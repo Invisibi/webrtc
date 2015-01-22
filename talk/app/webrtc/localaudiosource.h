@@ -47,6 +47,10 @@ class LocalAudioSource : public Notifier<AudioSourceInterface> {
   static rtc::scoped_refptr<LocalAudioSource> Create(
       const PeerConnectionFactoryInterface::Options& options,
       const MediaConstraintsInterface* constraints);
+  
+  // TODO: KenKuan: implement in future
+  virtual void AddSink(cricket::AudioRenderer* output) OVERRIDE {};
+  virtual void RemoveSink(cricket::AudioRenderer* output) OVERRIDE {};
 
   virtual SourceState state() const { return source_state_; }
   virtual const cricket::AudioOptions& options() const { return options_; }

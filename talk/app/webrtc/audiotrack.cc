@@ -36,6 +36,16 @@ AudioTrack::AudioTrack(const std::string& label,
                        AudioSourceInterface* audio_source)
     : MediaStreamTrack<AudioTrackInterface>(label),
       audio_source_(audio_source) {
+  if (audio_source_)
+    audio_source_->AddSink(&sinks_);
+}
+  
+void AudioTrack::AddSink(webrtc::AudioTrackSinkInterface *sink) {
+  sinks_.AddSink(sink);
+}
+  
+void AudioTrack::RemoveSink(webrtc::AudioTrackSinkInterface *sink) {
+  sinks_.RemoveSink(sink);
 }
 
 std::string AudioTrack::kind() const {

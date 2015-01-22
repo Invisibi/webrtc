@@ -144,6 +144,8 @@ class VideoTrackInterface : public MediaStreamTrackInterface {
 // The same source can be used in multiple AudioTracks.
 class AudioSourceInterface : public MediaSourceInterface {
  public:
+  virtual void AddSink(cricket::AudioRenderer* output) = 0;
+  virtual void RemoveSink(cricket::AudioRenderer* output) = 0;
   class AudioObserver {
    public:
     virtual void OnSetVolume(double volume) = 0;
@@ -160,6 +162,8 @@ class AudioSourceInterface : public MediaSourceInterface {
   // Registers/unregisters observer to the audio source.
   virtual void RegisterAudioObserver(AudioObserver* observer) {}
   virtual void UnregisterAudioObserver(AudioObserver* observer) {}
+protected:
+  virtual ~AudioSourceInterface() {}
 };
 
 // Interface for receiving audio data from a AudioTrack.

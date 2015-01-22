@@ -34,15 +34,24 @@
 
 namespace webrtc {
 
-rtc::scoped_refptr<RemoteAudioSource> RemoteAudioSource::Create() {
-  return new rtc::RefCountedObject<RemoteAudioSource>();
+rtc::scoped_refptr<RemoteAudioSource> RemoteAudioSource::Create(cricket::ChannelManager* channel_manager) {
+  return new rtc::RefCountedObject<RemoteAudioSource>(channel_manager);
 }
 
-RemoteAudioSource::RemoteAudioSource() {
+RemoteAudioSource::RemoteAudioSource(cricket::ChannelManager *channel_manager) :
+  channel_manager_(channel_manager){
 }
 
 RemoteAudioSource::~RemoteAudioSource() {
   ASSERT(audio_observers_.empty());
+}
+  
+void RemoteAudioSource::AddSink(cricket::AudioRenderer *output) {
+  // TODO: Add method to channel manager
+}
+
+void RemoteAudioSource::RemoveSink(cricket::AudioRenderer *output) {
+  // TODO: Add method to channel manager
 }
 
 MediaSourceInterface::SourceState RemoteAudioSource::state() const {
