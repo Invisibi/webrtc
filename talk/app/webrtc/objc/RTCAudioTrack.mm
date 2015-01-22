@@ -33,7 +33,52 @@
 
 #import "RTCMediaStreamTrack+Internal.h"
 
-@implementation RTCAudioTrack
+#import "RTCAudioSinkAdapter.h"
+
+@implementation RTCAudioTrack {
+    NSMutableArray *_adapters;
+}
+
+- (id)initWithMediaTrack:(rtc::scoped_refptr<webrtc::MediaStreamTrackInterface>)mediaTrack {
+    if (self = [super initWithMediaTrack:mediaTrack]) {
+        _adapters = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    for (RTCAudioSinkAdapter *adapter in _adapters) {
+        self.audioTrack->RemoveSink(adapter.nativeAudioSink);
+    }
+}
+
+- (void)addSink:(id<RTCAudioSink>)sink {
+    for (RTCAudioSinkAdapter *adapter in _adapters) {
+        NSParameterAssert(adapter.audioSink != sink);
+    }
+    
+    RTCAudioSinkAdapter *adapter = [[RTCAudioSinkAdapter alloc] initWithAudioSink:sink];
+    [_adapters addObject:adapter];
+    self.audioTrack->AddSink(adapter.nativeAudioSink);
+}
+
+- (void)removeSink:(id<RTCAudioSink>)sink {
+    RTCAudioSinkAdapter *adapter = nil;
+    NSUInteger indexToRemove = NSNotFound;
+    for (NSUInteger i = 0; i < _adapters.count; i++) {
+        adapter = _adapters[i];
+        if (adapter.audioSink == sink) {
+            indexToRemove = i;
+            break;
+        }
+    }
+    if (indexToRemove == NSNotFound) {
+        return;
+    }
+    self.audioTrack->RemoveSink(adapter.nativeAudioSink);
+    [_adapters removeObjectAtIndex:indexToRemove];
+}
+
 @end
 
 @implementation RTCAudioTrack (Internal)

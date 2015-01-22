@@ -27,8 +27,14 @@
 
 #import "RTCMediaStreamTrack.h"
 
+@protocol RTCAudioSink;
+
 // RTCAudioTrack is an ObjectiveC wrapper for AudioTrackInterface.
 @interface RTCAudioTrack : RTCMediaStreamTrack
+
+- (void)addSink:(id<RTCAudioSink>)sink;
+
+- (void)removeSink:(id<RTCAudioSink>)sink;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 // Disallow init and don't add to documentation

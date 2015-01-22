@@ -199,6 +199,8 @@
           'sources': [
             'app/webrtc/objc/RTCAudioTrack+Internal.h',
             'app/webrtc/objc/RTCAudioTrack.mm',
+            'app/webrtc/objc/RTCAudioSinkAdapter.h',
+            'app/webrtc/objc/RTCAudioSinkAdapter.mm',
             'app/webrtc/objc/RTCDataChannel+Internal.h',
             'app/webrtc/objc/RTCDataChannel.mm',
             'app/webrtc/objc/RTCEnumConverter.h',
@@ -240,6 +242,7 @@
             'app/webrtc/objc/RTCVideoTrack.mm',
             'app/webrtc/objc/public/RTCAudioSource.h',
             'app/webrtc/objc/public/RTCAudioTrack.h',
+            'app/webrtc/objc/public/RTCAudioSink.h',
             'app/webrtc/objc/public/RTCDataChannel.h',
             'app/webrtc/objc/public/RTCI420Frame.h',
             'app/webrtc/objc/public/RTCICECandidate.h',
