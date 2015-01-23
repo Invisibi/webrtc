@@ -47,6 +47,7 @@ class AudioRenderer;
 class VideoCapturer;
 class VideoRenderer;
 class VideoFrame;
+class VoiceChannel;
 
 }  // namespace cricket
 
@@ -217,6 +218,8 @@ class AudioTrackInterface : public MediaStreamTrackInterface {
   // after Chrome has the correct implementation of the interface.
   virtual bool GetSignalLevel(int* level) { return false; }
 
+  virtual void SetVoiceChannel(cricket::VoiceChannel *voice_channel) = 0;
+  
   // Get the audio processor used by the audio track. Return NULL if the track
   // does not have any processor.
   // TODO(xians): Make the interface pure virtual.

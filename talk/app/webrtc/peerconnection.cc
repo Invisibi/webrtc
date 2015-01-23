@@ -792,6 +792,7 @@ void PeerConnection::OnAddRemoteAudioTrack(MediaStreamInterface* stream,
                                            AudioTrackInterface* audio_track,
                                            uint32 ssrc) {
   stream_handler_container_->AddRemoteAudioTrack(stream, audio_track, ssrc);
+  audio_track->SetVoiceChannel(session_->voice_channel());
 }
 
 void PeerConnection::OnAddRemoteVideoTrack(MediaStreamInterface* stream,

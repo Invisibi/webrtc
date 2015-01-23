@@ -25,6 +25,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "talk/app/webrtc/audiotrack.h"
+#include "talk/session/media/channel.h"
 
 #include <string>
 
@@ -36,6 +37,10 @@ AudioTrack::AudioTrack(const std::string& label,
                        AudioSourceInterface* audio_source)
     : MediaStreamTrack<AudioTrackInterface>(label),
       audio_source_(audio_source) {
+}
+  
+void AudioTrack::SetVoiceChannel(cricket::VoiceChannel *voice_channel) {
+  voice_channel_ = voice_channel;
 }
 
 std::string AudioTrack::kind() const {
