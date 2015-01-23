@@ -50,7 +50,7 @@
 /links.db
 /net
 /out
-/out_mac
+/out_*
 /resources
 /talk/examples/android/bin
 /talk/examples/android/gen
