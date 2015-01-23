@@ -207,6 +207,7 @@ class FileVoiceChannel : public VoiceMediaChannel {
   virtual bool SetLocalRenderer(uint32 ssrc, AudioRenderer* renderer) {
     return false;
   }
+  virtual bool AddRemoteSink(uint32 ssrc, AudioRenderer* renderer) { return false; }
   virtual bool GetActiveStreams(AudioInfo::StreamList* actives) { return true; }
   virtual int GetOutputLevel() { return 0; }
   virtual int GetTimeSinceLastTyping() { return -1; }

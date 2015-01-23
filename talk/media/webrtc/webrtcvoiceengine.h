@@ -366,6 +366,7 @@ class WebRtcVoiceMediaChannel
   virtual bool SetRemoteRenderer(uint32 ssrc, AudioRenderer* renderer);
   virtual bool SetLocalRenderer(uint32 ssrc, AudioRenderer* renderer);
   virtual bool addExternalAudioProcessing(uint32 ssrc, webrtc::VoEMediaProcess& process);
+  virtual bool AddRemoteSink(uint32 ssrc, AudioRenderer* renderer);
   virtual bool GetActiveStreams(AudioInfo::StreamList* actives);
   virtual int GetOutputLevel();
   virtual int GetTimeSinceLastTyping();

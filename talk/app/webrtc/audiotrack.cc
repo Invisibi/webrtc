@@ -38,6 +38,7 @@ AudioTrack::AudioTrack(const std::string& label,
     : MediaStreamTrack<AudioTrackInterface>(label),
       audio_source_(audio_source) {
   if (audio_source_)
+    // TODO: Remove this
     audio_source_->AddSink(&sinks_);
 }
   
@@ -49,8 +50,9 @@ void AudioTrack::RemoveSink(webrtc::AudioTrackSinkInterface *sink) {
   sinks_.RemoveSink(sink);
 }
   
-void AudioTrack::SetVoiceChannel(cricket::VoiceChannel *voice_channel) {
+void AudioTrack::SetVoiceChannel(uint32 ssrc, cricket::VoiceChannel *voice_channel) {
   voice_channel_ = voice_channel;
+  voice_channel_->AddRemoteSink(ssrc, &sinks_);
 }
 
 std::string AudioTrack::kind() const {

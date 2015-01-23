@@ -1033,6 +1033,7 @@ class VoiceMediaChannel : public MediaChannel {
   // Sets the renderer object to be used for the specified local audio stream.
   virtual bool SetLocalRenderer(uint32 ssrc, AudioRenderer* renderer) = 0;
   virtual bool addExternalAudioProcessing(uint32 ssrc, webrtc::VoEMediaProcess& process) = 0;
+  virtual bool AddRemoteSink(uint32 ssrc, AudioRenderer* renderer) = 0;
   // Gets current energy levels for all incoming streams.
   virtual bool GetActiveStreams(AudioInfo::StreamList* actives) = 0;
   // Get the current energy level of the stream sent to the speaker.

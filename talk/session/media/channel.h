@@ -409,7 +409,10 @@ class VoiceChannel : public BaseChannel {
   bool Init();
   bool SetRemoteRenderer(uint32 ssrc, AudioRenderer* renderer);
   bool SetLocalRenderer(uint32 ssrc, AudioRenderer* renderer);
+  // TODO: Temporary implememtation, will remote later
   bool addExternalAudioProcessing(uint32 ssrc, webrtc::VoEMediaProcess& process);
+  bool AddRemoteSink(uint32 ssrc, AudioRenderer* renderer);
+  bool RemoveRemoteSink(uint32 ssrc, AudioRenderer* renderer);
 
   // downcasts a MediaChannel
   virtual VoiceMediaChannel* media_channel() const {

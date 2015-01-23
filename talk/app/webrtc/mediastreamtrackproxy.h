@@ -45,7 +45,7 @@ BEGIN_PROXY_MAP(AudioTrack)
   PROXY_METHOD1(void, AddSink, AudioTrackSinkInterface*)
   PROXY_METHOD1(void, RemoveSink, AudioTrackSinkInterface*)
   PROXY_METHOD1(bool, GetSignalLevel, int*)
-  PROXY_METHOD1(void, SetVoiceChannel, cricket::VoiceChannel*)
+  PROXY_METHOD2(void, SetVoiceChannel, uint32, cricket::VoiceChannel*)
   PROXY_METHOD0(rtc::scoped_refptr<AudioProcessorInterface>,
                 GetAudioProcessor)
   PROXY_METHOD0(cricket::AudioRenderer*, GetRenderer)

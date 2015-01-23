@@ -2894,6 +2894,19 @@ bool WebRtcVoiceMediaChannel::SetRemoteRenderer(uint32 ssrc,
   return true;
 }
 
+bool WebRtcVoiceMediaChannel::AddRemoteSink(uint32 ssrc, AudioRenderer* renderer) {
+  ChannelMap::iterator it = receive_channels_.find(ssrc);
+  if (it == receive_channels_.end()) {
+    // The channel likely has gone away, do nothing.
+    return true;
+  }
+  
+  // TODO: Connect renderer to process
+  // engine()->voe()->media()->RegisterExternalMediaProcessing(it->second->channel(), webrtc::kPlaybackAllChannelsMixed, process);
+
+  return true;
+}
+
 bool WebRtcVoiceMediaChannel::SetLocalRenderer(uint32 ssrc,
                                                AudioRenderer* renderer) {
   ChannelMap::iterator it = send_channels_.find(ssrc);
