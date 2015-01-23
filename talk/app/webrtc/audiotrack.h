@@ -35,6 +35,12 @@
 #include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/scoped_ref_ptr.h"
 
+namespace cricket {
+  
+class VoiceChannel;
+  
+}
+
 namespace webrtc {
 
 class AudioTrack : public MediaStreamTrack<AudioTrackInterface> {
@@ -50,6 +56,7 @@ class AudioTrack : public MediaStreamTrack<AudioTrackInterface> {
   virtual void AddSink(AudioTrackSinkInterface* sink);
   virtual void RemoveSink(AudioTrackSinkInterface* sink);
   virtual bool GetSignalLevel(int* level) OVERRIDE { return false; }
+  virtual void SetVoiceChannel(cricket::VoiceChannel *voice_channel);
   virtual rtc::scoped_refptr<AudioProcessorInterface> GetAudioProcessor()
       OVERRIDE { return NULL; }
   virtual cricket::AudioRenderer* GetRenderer() OVERRIDE {
@@ -64,6 +71,7 @@ class AudioTrack : public MediaStreamTrack<AudioTrackInterface> {
 
  private:
   AudioTrackSinks sinks_;
+  cricket::VoiceChannel* voice_channel_;
   rtc::scoped_refptr<AudioSourceInterface> audio_source_;
 };
 

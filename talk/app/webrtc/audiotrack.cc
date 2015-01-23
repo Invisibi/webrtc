@@ -25,6 +25,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "talk/app/webrtc/audiotrack.h"
+#include "talk/session/media/channel.h"
 
 #include <string>
 
@@ -46,6 +47,10 @@ void AudioTrack::AddSink(webrtc::AudioTrackSinkInterface *sink) {
   
 void AudioTrack::RemoveSink(webrtc::AudioTrackSinkInterface *sink) {
   sinks_.RemoveSink(sink);
+}
+  
+void AudioTrack::SetVoiceChannel(cricket::VoiceChannel *voice_channel) {
+  voice_channel_ = voice_channel;
 }
 
 std::string AudioTrack::kind() const {
