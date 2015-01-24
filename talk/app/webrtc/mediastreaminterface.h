@@ -221,6 +221,16 @@ class AudioTrackInterface : public MediaStreamTrackInterface {
   // TODO(xians): Change the interface to int GetSignalLevel() and pure virtual
   // after Chrome has the correct implementation of the interface.
   virtual bool GetSignalLevel(int* level) { return false; }
+  
+  virtual void StartMonitor(int cms) = 0;
+  
+  virtual void StopMonitor() = 0;
+  
+  virtual int GetInputLevel() = 0;
+
+  virtual int GetOutputLevel() = 0;
+
+  virtual bool HasActiveStreams() = 0;
 
   // Inject voice channel into audio track
   virtual void SetVoiceChannel(uint32 ssrc, cricket::VoiceChannel *voice_channel) = 0;

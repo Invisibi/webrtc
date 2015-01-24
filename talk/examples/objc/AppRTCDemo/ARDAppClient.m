@@ -63,6 +63,7 @@ static NSInteger kARDAppClientErrorInvalidRoom = -6;
 
 @implementation ARDAppClient
 
+@synthesize audioTrack = _audioTrack;
 @synthesize delegate = _delegate;
 @synthesize state = _state;
 @synthesize roomServerClient = _roomServerClient;
@@ -263,8 +264,8 @@ static NSInteger kARDAppClientErrorInvalidRoom = -6;
         (unsigned long)stream.videoTracks.count,
         (unsigned long)stream.audioTracks.count);
     if (stream.audioTracks.count) {
-      RTCAudioTrack *audioTrack = stream.audioTracks[0];
-      [audioTrack addSink:self];
+      _audioTrack = stream.audioTracks[0];
+      [_audioTrack startMonitor:30];
     }
     if (stream.videoTracks.count) {
       RTCVideoTrack *videoTrack = stream.videoTracks[0];
@@ -439,7 +440,11 @@ static NSInteger kARDAppClientErrorInvalidRoom = -6;
 
 - (void)tick:(NSTimer *)timer
 {
-    NSLog(@"Voice activity: %@", [_factory voiceActivity] ? @"Speaking" : @"Slient");
+  if (_audioTrack) {
+    NSLog(@"out %i", [_audioTrack outputLevel]);
+    NSLog(@"in %i", [_audioTrack inputLevel]);
+    NSLog(@"%@", [_audioTrack hasActiveStreams] ? @"^^^^^^^^^^" : @"_______");
+  }
 }
 
 - (void)sendSignalingMessage:(ARDSignalingMessage *)message {

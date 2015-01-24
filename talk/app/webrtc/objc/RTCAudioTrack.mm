@@ -79,6 +79,26 @@
     [_adapters removeObjectAtIndex:indexToRemove];
 }
 
+- (void)startMonitor:(int)cms {
+  self.audioTrack->StartMonitor(cms);
+}
+
+- (void)stopMonitor {
+  self.audioTrack->StopMonitor();
+}
+
+- (int)inputLevel {
+  return self.audioTrack->GetInputLevel();
+}
+
+- (int)outputLevel {
+  return self.audioTrack->GetOutputLevel();
+}
+
+- (bool)hasActiveStreams {
+  return self.audioTrack->HasActiveStreams();
+}
+
 @end
 
 @implementation RTCAudioTrack (Internal)

@@ -26,6 +26,7 @@
  */
 #include "talk/app/webrtc/audiotrack.h"
 #include "talk/session/media/channel.h"
+#include "talk/session/media/audiomonitor.h"
 
 #include <string>
 
@@ -53,6 +54,28 @@ void AudioTrack::RemoveSink(webrtc::AudioTrackSinkInterface *sink) {
 void AudioTrack::SetVoiceChannel(uint32 ssrc, cricket::VoiceChannel *voice_channel) {
   voice_channel_ = voice_channel;
   voice_channel_->AddRemoteSink(ssrc, &sinks_);
+}
+    
+void AudioTrack::StartMonitor(int cms) {
+    voice_channel_->StartAudioMonitor(cms);
+}
+  
+void AudioTrack::StopMonitor() {
+  voice_channel_->StopAudioMonitor();
+}
+  
+int AudioTrack::GetInputLevel() {
+  return voice_channel_->GetInputLevel_w();
+}
+
+int AudioTrack::GetOutputLevel() {
+  return voice_channel_->GetOutputLevel_w();
+}
+
+bool AudioTrack::HasActiveStreams() {
+  cricket::AudioInfo::StreamList list;
+  voice_channel_->GetActiveStreams_w(&list);
+  return (list.size() > 0);
 }
 
 std::string AudioTrack::kind() const {

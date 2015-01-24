@@ -57,11 +57,22 @@ class AudioTrack : public MediaStreamTrack<AudioTrackInterface> {
   virtual void RemoveSink(AudioTrackSinkInterface* sink);
   virtual bool GetSignalLevel(int* level) OVERRIDE { return false; }
   virtual void SetVoiceChannel(uint32 ssrc, cricket::VoiceChannel *voice_channel);
+
   virtual rtc::scoped_refptr<AudioProcessorInterface> GetAudioProcessor()
       OVERRIDE { return NULL; }
   virtual cricket::AudioRenderer* GetRenderer() OVERRIDE {
     return NULL;
   }
+
+void StartMonitor(int cms);
+  
+void StopMonitor();
+  
+int GetInputLevel();
+
+int GetOutputLevel();
+
+bool HasActiveStreams();
 
   // MediaStreamTrack implementation.
   virtual std::string kind() const OVERRIDE;
