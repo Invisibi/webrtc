@@ -30,6 +30,12 @@
 // RTCAudioTrack is an ObjectiveC wrapper for AudioTrackInterface.
 @interface RTCAudioTrack : RTCMediaStreamTrack
 
+- (int)inputLevel;
+
+- (int)outputLevel;
+
+- (bool)hasActiveStreams;
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 // Disallow init and don't add to documentation
 - (id)init __attribute__(

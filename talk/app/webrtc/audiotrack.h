@@ -62,6 +62,12 @@ class AudioTrack : public MediaStreamTrack<AudioTrackInterface> {
     return NULL;
   }
 
+int GetInputLevel();
+
+int GetOutputLevel();
+
+bool HasActiveStreams();
+
   // MediaStreamTrack implementation.
   virtual std::string kind() const OVERRIDE;
 

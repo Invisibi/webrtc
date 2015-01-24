@@ -44,6 +44,7 @@
 #import "RTCSessionDescription+JSON.h"
 #import "RTCVideoCapturer.h"
 #import "RTCVideoTrack.h"
+#import "RTCAudioTrack.h"
 
 static NSString *kARDDefaultSTUNServerUrl =
     @"stun:stun.l.google.com:19302";
@@ -60,8 +61,11 @@ static NSInteger kARDAppClientErrorSetSDP = -4;
 static NSInteger kARDAppClientErrorInvalidClient = -5;
 static NSInteger kARDAppClientErrorInvalidRoom = -6;
 
+static int charCounter = 0;
+
 @implementation ARDAppClient
 
+@synthesize audioTrack = _audioTrack;
 @synthesize delegate = _delegate;
 @synthesize state = _state;
 @synthesize roomServerClient = _roomServerClient;
@@ -261,6 +265,9 @@ static NSInteger kARDAppClientErrorInvalidRoom = -6;
     NSLog(@"Received %lu video tracks and %lu audio tracks",
         (unsigned long)stream.videoTracks.count,
         (unsigned long)stream.audioTracks.count);
+    if (stream.audioTracks.count) {
+      _audioTrack = stream.audioTracks[0];
+    }
     if (stream.videoTracks.count) {
       RTCVideoTrack *videoTrack = stream.videoTracks[0];
       [_delegate appClient:self didReceiveRemoteVideoTrack:videoTrack];
@@ -414,7 +421,8 @@ static NSInteger kARDAppClientErrorInvalidRoom = -6;
       RTCSessionDescription *description = sdpMessage.sessionDescription;
       [_peerConnection setRemoteDescriptionWithDelegate:self
                                      sessionDescription:description];
-      break;
+        [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(tick:) userInfo:nil repeats:YES];
+        break;
     }
     case kARDSignalingMessageTypeCandidate: {
       ARDICECandidateMessage *candidateMessage =
@@ -428,6 +436,19 @@ static NSInteger kARDAppClientErrorInvalidRoom = -6;
       // disconnect.
       [self disconnect];
       break;
+  }
+}
+
+- (void)tick:(NSTimer *)timer
+{
+  if (_audioTrack) {
+      charCounter++;
+      if (charCounter > 100) {
+          charCounter = 0;
+          printf("%s\n", [_audioTrack inputLevel] > 3? "^" : "_");
+      } else {
+          printf("%s", [_audioTrack inputLevel] > 3? "^" : "_");
+      }
   }
 }
 

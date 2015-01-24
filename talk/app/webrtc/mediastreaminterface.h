@@ -218,6 +218,12 @@ class AudioTrackInterface : public MediaStreamTrackInterface {
   // after Chrome has the correct implementation of the interface.
   virtual bool GetSignalLevel(int* level) { return false; }
 
+  virtual int GetInputLevel() = 0;
+
+  virtual int GetOutputLevel() = 0;
+
+  virtual bool HasActiveStreams() = 0;
+
   virtual void SetVoiceChannel(cricket::VoiceChannel *voice_channel) = 0;
   
   // Get the audio processor used by the audio track. Return NULL if the track

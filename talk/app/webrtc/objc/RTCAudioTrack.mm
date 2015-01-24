@@ -34,6 +34,19 @@
 #import "RTCMediaStreamTrack+Internal.h"
 
 @implementation RTCAudioTrack
+
+- (int)inputLevel {
+    return self.audioTrack->GetInputLevel();
+}
+
+- (int)outputLevel {
+    return self.audioTrack->GetOutputLevel();
+}
+
+- (bool)hasActiveStreams {
+    return self.audioTrack->HasActiveStreams();
+}
+
 @end
 
 @implementation RTCAudioTrack (Internal)
