@@ -3282,6 +3282,36 @@ JOW(jboolean, MediaStreamTrack_nativeSetEnabled)(
       ->set_enabled(enabled);
 }
 
+JOW(void, AudioTrack_nativeStartMonitor)(
+	JNIEnv *jni, jobject j_dc,
+	jlong j_audio_track_pointer, jint j_poll_interval) {
+	reinterpret_cast<AudioTrackInterface*>(j_audio_track_pointer)->StartMonitor(j_poll_interval);
+}
+
+JOW(void, AudioTrack_nativeStopMonitor)(
+	JNIEnv *jni, jobject j_dc,
+	jlong j_audio_track_pointer) {
+	reinterpret_cast<AudioTrackInterface*>(j_audio_track_pointer)->StopMonitor();
+}
+
+JOW(jint, AudioTrack_nativeGetInputLevel)(
+	JNIEnv *jni, jobject j_dc,
+	jlong j_audio_track_pointer) {
+	return reinterpret_cast<AudioTrackInterface*>(j_audio_track_pointer)->GetInputLevel();
+}
+
+JOW(jint, AudioTrack_nativeGetOutputLevel)(
+	JNIEnv *jni, jobject j_dc,
+	jlong j_audio_track_pointer) {
+	return reinterpret_cast<AudioTrackInterface*>(j_audio_track_pointer)->GetOutputLevel();
+}
+
+JOW(jboolean, AudioTrack_nativeHasActiveStreams)(
+	JNIEnv *jni, jobject j_dc,
+	jlong j_audio_track_pointer) {
+	return reinterpret_cast<AudioTrackInterface*>(j_audio_track_pointer)->HasActiveStreams();
+}
+
 JOW(void, VideoTrack_nativeAddRenderer)(
     JNIEnv* jni, jclass,
     jlong j_video_track_pointer, jlong j_renderer_pointer) {

@@ -32,4 +32,30 @@ public class AudioTrack extends MediaStreamTrack {
   public AudioTrack(long nativeTrack) {
     super(nativeTrack);
   }
+
+  public void startMonitor(int pollingIntervalMS) {
+    nativeStartMonitor(nativeTrack, pollingIntervalMS);
+  }
+
+  public void stopMonitor() {
+    nativeStopMonitor(nativeTrack);
+  }
+
+  public int getInputLevel() {
+    return nativeGetInputLevel(nativeTrack);
+  }
+
+  public int getOutputLevel() {
+    return nativeGetInputLevel(nativeTrack);
+  }
+
+  public boolean hasActiveStreams() {
+   return nativeHasActiveStreams(nativeTrack);
+  }
+
+  private static native void nativeStartMonitor(long nativeTrack, int pollingIntervalMS);
+  private static native void nativeStopMonitor(long nativeTrack);
+  private static native int nativeGetInputLevel(long nativeTrack);
+  private static native int nativeGetOutputLevel(long nativeTrack);
+  private static native boolean nativeHasActiveStreams(long nativeTrack);
 }
