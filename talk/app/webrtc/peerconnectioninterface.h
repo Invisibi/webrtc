@@ -550,7 +550,6 @@ class PeerConnectionFactoryInterface : public rtc::RefCountInterface {
   // http://crbug.com/264611.
   virtual bool StartAecDump(rtc::PlatformFile file) = 0;
 
-  virtual bool GetVoiceActivityIndicator() = 0;
  protected:
   // Dtor and ctor protected as objects shouldn't be created or deleted via
   // this interface.

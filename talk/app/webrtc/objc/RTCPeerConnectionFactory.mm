@@ -143,8 +143,4 @@
   return [[RTCAudioTrack alloc] initWithMediaTrack:track];
 }
 
-- (BOOL)voiceActivity {
-  return self.nativeFactory->GetVoiceActivityIndicator();
-}
-
 @end

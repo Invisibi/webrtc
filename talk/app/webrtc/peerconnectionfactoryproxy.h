@@ -55,7 +55,6 @@ BEGIN_PROXY_MAP(PeerConnectionFactory)
   PROXY_METHOD2(rtc::scoped_refptr<AudioTrackInterface>,
                 CreateAudioTrack, const std::string&,  AudioSourceInterface*)
   PROXY_METHOD1(bool, StartAecDump, rtc::PlatformFile)
-  PROXY_METHOD0(bool, GetVoiceActivityIndicator)
 END_PROXY()
 
 }  // namespace webrtc
