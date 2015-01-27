@@ -32,4 +32,20 @@ public class AudioTrack extends MediaStreamTrack {
   public AudioTrack(long nativeTrack) {
     super(nativeTrack);
   }
+
+  public int getInputLevel() {
+    return nativeGetInputLevel(nativeTrack);
+  }
+
+  public int getOutputLevel() {
+    return nativeGetInputLevel(nativeTrack);
+  }
+
+  public boolean hasActiveStreams() {
+   return nativeHasActiveStreams(nativeTrack);
+  }
+
+  private static native int nativeGetInputLevel(long nativeTrack);
+  private static native int nativeGetOutputLevel(long nativeTrack);
+  private static native boolean nativeHasActiveStreams(long nativeTrack);
 }
