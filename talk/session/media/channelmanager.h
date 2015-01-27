@@ -240,6 +240,7 @@ class ChannelManager : public rtc::MessageHandler,
   // TODO(hellner): Remove this function once the engine capturer has been
   // removed.
   VideoFormat GetStartCaptureFormat();
+  bool GetVoiceActivityIndicator() { return media_engine_->GetVoiceActivityIndicator(); }
 
  protected:
   // Adds non-transient parameters which can only be changed through the

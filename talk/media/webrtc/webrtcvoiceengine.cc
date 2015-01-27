@@ -378,6 +378,10 @@ WebRtcVoiceEngine::WebRtcVoiceEngine(VoEWrapper* voe_wrapper,
       rx_processor_ssrc_(0) {
   Construct();
 }
+    
+bool WebRtcVoiceEngine::GetVoiceActivityIndicator() {
+  return voe_wrapper_->processing()->VoiceActivityIndicator(0);
+}
 
 void WebRtcVoiceEngine::Construct() {
   SetTraceFilter(log_filter_);
@@ -2070,9 +2074,9 @@ bool WebRtcVoiceMediaChannel::SetRecvCodecs(
 
 bool WebRtcVoiceMediaChannel::SetSendCodecs(
     int channel, const std::vector<AudioCodec>& codecs) {
-  // Disable VAD, FEC, and RED unless we know the other side wants them.
-  engine()->voe()->codec()->SetVADStatus(channel, false);
-  engine()->voe()->rtp()->SetNACKStatus(channel, false, 0);
+//   Disable VAD, FEC, and RED unless we know the other side wants them.
+    engine()->voe()->codec()->SetVADStatus(channel, true, webrtc::kVadAggressiveHigh, false);
+//  engine()->voe()->rtp()->SetNACKStatus(channel, false, 0);
 #ifdef USE_WEBRTC_DEV_BRANCH
   engine()->voe()->rtp()->SetREDStatus(channel, false);
   engine()->voe()->codec()->SetFECStatus(channel, false);

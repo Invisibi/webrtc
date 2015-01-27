@@ -68,4 +68,6 @@
 // Creates an new AudioTrack.
 - (RTCAudioTrack *)audioTrackWithID:(NSString *)audioId;
 
+- (BOOL)voiceActivity;
+
 @end

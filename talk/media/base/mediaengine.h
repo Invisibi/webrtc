@@ -146,6 +146,8 @@ class MediaEngineInterface {
 
   virtual sigslot::repeater2<VideoCapturer*, CaptureState>&
       SignalVideoCaptureStateChange() = 0;
+    
+  virtual bool GetVoiceActivityIndicator() = 0;
 };
 
 
@@ -274,6 +276,10 @@ class CompositeMediaEngine : public MediaEngineInterface {
   virtual sigslot::repeater2<VideoCapturer*, CaptureState>&
       SignalVideoCaptureStateChange() {
     return signal_state_change_;
+  }
+    
+  virtual bool GetVoiceActivityIndicator() {
+    return voice_.GetVoiceActivityIndicator();
   }
 
  protected:

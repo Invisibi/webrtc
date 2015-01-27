@@ -163,6 +163,10 @@ bool PeerConnectionFactory::Initialize() {
   }
   return true;
 }
+    
+bool PeerConnectionFactory::GetVoiceActivityIndicator() {
+  return channel_manager_->GetVoiceActivityIndicator();
+}
 
 rtc::scoped_refptr<AudioSourceInterface>
 PeerConnectionFactory::CreateAudioSource(
