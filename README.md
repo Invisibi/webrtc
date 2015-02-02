@@ -1,17 +1,16 @@
 # Prepare the WebRTC Build Docker Image for Howler
  
-Requirements: 
-- You have boot2docker and docker installed.
+You need to have docker (and boot2docker on OS X) already installed.
  
-1. Create persistent data volume (if not done already)
-```
+**1. Create persistent data volume (if not done already)**
+```shell
 docker run -v /webrtc --name hooloop-webrtc-data busybox true
 docker run --rm -t --volumes-from hooloop-webrtc-data hooloop/webrtc:temp /bin/bash -lc "chown -R webrtc:webrtc /webrtc"
 ```
-Note: There is currently a bug in the image which you says that android/build.sh cannot be found. You can safely ignore this.
- 
-2. Download sources
-```
+_Note: There is currently a bug in the image which you says that android/build.sh cannot be found. You can safely ignore this._
+
+**2. Download sources**
+```shell
 docker run -w=/webrtc -u=webrtc --rm -t --volumes-from hooloop-webrtc-data hooloop/webrtc:temp /bin/bash -lc "git clone https://github.com/egistli/webrtc-build-scripts.git"
 docker run -w=/webrtc -u=webrtc --rm -t --volumes-from hooloop-webrtc-data hooloop/webrtc:temp /bin/bash -lc "mkdir /webrtc/Custom_WebRTC"
 docker run -w=/webrtc -u=webrtc --rm -t --volumes-from hooloop-webrtc-data hooloop/webrtc:temp /bin/bash -lc "get_webrtc"
@@ -19,14 +18,14 @@ docker run -w=/webrtc -u=webrtc --rm -t --volumes-from hooloop-webrtc-data hoolo
 
 # Use the image to build WebRTC for Android
  
-1. Share data volume via OS X network share (only necessary once after booting up boot2docker)
-```
+**1. Share data volume via OS X network share (only necessary once after booting up boot2docker)**
+```shell
 docker run --volumes-from hooloop-webrtc-data -p 548:548 --net=host -d hooloop/webrtc-share
 ```
-Note: To access the share, go to Finder. In sidebar "boot2docker" should appear or press ```CMD-K``` and enter ```afp://192.168.59.103``` (or whatever your docker ip is, enter ```boot2docker ip``` to find out). Connect as user: webrtc, password: webrtc
+_Note: To access the share, go to Finder. In sidebar "boot2docker" should appear or press ```CMD-K``` and enter ```afp://192.168.59.103``` (or whatever your docker ip is, enter ```boot2docker ip``` to find out). Connect as user: webrtc, password: webrtc_
  
-2. Trigger build
-```
+**2. Trigger build**
+```shell
 docker run -w=/webrtc -u=webrtc --rm -t --volumes-from hooloop-webrtc-data hooloop/webrtc:temp /bin/bash -lc "build_apprtc"
 ```
  
@@ -41,13 +40,17 @@ The following steps are NOT necessary for building WebRTC. Go ahead if you want 
 your own docker images, otherwise ignore anything below.
  
 Create persistent docker volume 
-```docker run -v /webrtc --name hooloop-webrtc-data busybox true```
+```shell
+docker run -v /webrtc --name hooloop-webrtc-data busybox true
+```
  
 Login to an Ubuntu container
-```docker run -it --volumes-from hooloop-webrtc-data ubuntu /bin/bash```
+```shell
+docker run -it --volumes-from hooloop-webrtc-data ubuntu /bin/bash
+```
  
 Inside the docker container: 
-```
+```shell
 apt-get update
 apt-get -y install git vim software-properties-common
 add-apt-repository multiverse
@@ -87,13 +90,13 @@ apt-get clean autoclean autoremove
 ```
 
 Get docker container id and commit changes
-```
+```shell
 docker ps -a
 docker commit -m "Setup build container for WebRTC" -a "Superman" <Container ID> hooloop/webrtc:temp
 ```
  
 # Building WebRTC Network Share Docker Image manually
-```
+```shell
 git clone https://github.com/mikumi/docker-timemachine.git
 cd docker-timemachine
 docker build -t=hooloop/webrtc-share .
